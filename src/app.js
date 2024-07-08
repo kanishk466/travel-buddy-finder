@@ -20,7 +20,7 @@ import messageRoutes from './routes/message.route.js';
 import profileRoutes from "./routes/profile.route.js"
 
 
-app.use("/api/v1/users",authRoute);
+app.use("/api/users",authRoute);
 app.use('/api/destinations', destinationRoutes);
 app.use('/api/matches', matchRoutes);
 app.use('/api/messages', messageRoutes);
