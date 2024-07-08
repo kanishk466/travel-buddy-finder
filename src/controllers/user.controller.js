@@ -13,7 +13,8 @@ export const registerUser  = async (req,res)=>{
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const user = new User({ ...req.body, password: hashedPassword });
         const savedUser = await user.save();
-        res.status(201).json(savedUser);
+        const token = jwt.sign({ userId: savedUser._id }, process.env.secret);
+        res.status(201).json({savedUser,token});
       } catch (err) {
         res.status(400).json({ message: err.message });
       }
@@ -27,7 +28,7 @@ export const loginUser = async (req,res)=>{
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) return res.status(400).json({ message: 'Invalid password' });
     
-        const token = jwt.sign({ id: user._id }, 'secret', { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.secret, { expiresIn: '1h' });
         res.json({ token, user });
       } catch (err) {
         res.status(500).json({ message: err.message });

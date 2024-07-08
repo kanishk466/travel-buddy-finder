@@ -14,8 +14,17 @@ app.use(express.static("public"))
 
 
 import authRoute from "./routes/auth.route.js"
+import destinationRoutes from './routes/destination.route.js';
+import matchRoutes from './routes/match.route.js';
+import messageRoutes from './routes/message.route.js';
+import profileRoutes from "./routes/profile.route.js"
+
 
 app.use("/api/v1/users",authRoute);
+app.use('/api/destinations', destinationRoutes);
+app.use('/api/matches', matchRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/profile', profileRoutes)
 
 
 export {app};
